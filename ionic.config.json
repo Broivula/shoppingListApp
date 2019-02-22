@@ -1,5 +1,12 @@
 {
   "name": "shoppingListApp",
   "integrations": {},
-  "type": "ionic-angular"
+  "type": "ionic-angular",
+  "app_id": "",
+  "proxies": [
+    {
+      "path": "/node",
+      "proxyUrl": "http://192.168.8.101/node"
+    }
+  ]
 }
