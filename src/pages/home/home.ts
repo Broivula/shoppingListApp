@@ -76,4 +76,50 @@ export class HomePage {
       this.getList();
     })
   }
+
+
+  ionViewDidLoad() {
+    //*for offline testing
+    let first = {
+      'item':'makkara',
+      'user':'heli',
+    }
+
+
+    let second = {
+      'item':'lehti',
+      'user':'elias',
+    }
+
+
+    let third = {
+      'item':'ketsuppi',
+      'user':'heli',
+    }
+
+
+    let fourth = {
+      'item':'porkkana',
+      'user':'heli',
+    }
+
+    let fifth = {
+      'item':'viides',
+      'user':'piita',
+    }
+
+    let sixth = {
+      'item':'kuudes',
+      'user':'piita',
+    }
+
+    let seventh = {
+      'item':'seitsemäs',
+      'user':'biibi',
+    }
+
+    this.shoppingListData.push(first, second, third, fourth, fifth, sixth, seventh);
+    this.usernameBool = true;
+
+  }
 }
