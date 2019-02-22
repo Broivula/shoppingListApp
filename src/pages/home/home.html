@@ -8,5 +8,25 @@
 
 <ion-content padding>
 
-  <button ion-button (click)="getList()">Get shopping list!</button>
+  <div *ngIf="!usernameBool">
+    <ion-input placeholder="anna käyttäjänimi" type="text" #nameInput></ion-input>
+    <button ion-button (click)="enterUsername()">sisään!</button>
+  </div>
+
+  <div *ngIf="usernameBool">
+    <button ion-button (click)="getList()">Get shopping list!</button>
+
+    <ion-item *ngFor="let entry of shoppingListData">
+      <h3>{{entry.item}}</h3>
+      <p>{{entry.user}}</p>
+      <p>{{entry.date | date:"dd/MM/yy"}}</p>
+      <button ion-button color="danger" value="{{entry.item}}" (click)="deleteItem($event)" >X</button>
+    </ion-item>
+  </div>
+
+  <div *ngIf="usernameBool">
+  <h3>Lisää esine!!</h3>
+    <ion-input placeholder="esine" type="text" #itemInput></ion-input>
+    <button ion-button (click)="postNewItem()">lisää esine</button>
+  </div>
 </ion-content>
