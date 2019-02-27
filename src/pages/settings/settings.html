@@ -1,0 +1,16 @@
+
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>settings</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <p>text</p>
+  <form [formGroup]="form">
+  <ion-input type="text" [placeholder]="this.placeHolder" [value]="this.placeHolder" formControlName="item" #itemName></ion-input>
+  <ion-input type="text"  placeholder="hinta" formControlName="price"></ion-input>
+  <button ion-button (click)="registerNewItem()">Lähetä</button>
+  </form>
+</ion-content>

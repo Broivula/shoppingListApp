@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { iShoppingList } from "../../interfaces/interfaces";
+import {iRegisteredItems, iShoppingList} from "../../interfaces/interfaces";
 
 /*
   Generated class for the MediaProvider provider.
@@ -11,14 +11,18 @@ import { iShoppingList } from "../../interfaces/interfaces";
 @Injectable()
 export class MediaProvider {
 
-
+apiurl='http://192.168.8.101/node';
 
   constructor(public http: HttpClient) {
     console.log('Hello MediaProvider Provider');
   }
 
   getShoppingList() {
-    return this.http.get<iShoppingList[]>('/node/list');
+    return this.http.get<iShoppingList[]>('/node/get/list');
+  }
+
+  checkForNewItem() {
+    return this.http.get<iRegisteredItems[]>('/node/get/registeredItems')
   }
 
   postItem (data) {
@@ -28,6 +32,16 @@ export class MediaProvider {
       }
     };
     return this.http.post('/node/post/item',data,  httpOptions);
+  }
+
+
+  registerItem (data) {
+    const httpOptions = {
+      headers: {
+        'Content-type': 'application/json',
+      }
+    };
+    return this.http.post('/node/post/register', data, httpOptions)
   }
 
   deleteItem(item) {

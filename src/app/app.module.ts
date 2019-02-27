@@ -8,21 +8,28 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { MediaProvider } from '../providers/media/media';
 import { HttpClientModule} from "@angular/common/http";
+import { SocketIoModule, SocketIoConfig } from "ng-socket-io";
+import {SettingsPage} from "../pages/settings/settings";
+//const config: SocketIoConfig = {url:"http://192.168.8.101/node:2222", options:{path:'/node/socket.io/websocket'}};
+
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    HomePage,
+    SettingsPage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    HttpClientModule
+    HttpClientModule,
+   // SocketIoModule.forRoot(config)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    HomePage,
+    SettingsPage
   ],
   providers: [
     StatusBar,

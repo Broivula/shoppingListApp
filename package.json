@@ -26,14 +26,21 @@
     "@ionic/storage": "2.2.0",
     "ionic-angular": "3.9.3",
     "ionicons": "3.0.0",
+    "ng-socket-io": "^0.2.4",
     "rxjs": "5.5.11",
     "sw-toolbox": "3.6.0",
-    "zone.js": "0.8.29"
+    "zone.js": "0.8.29",
+    "cordova-android": "7.1.4"
   },
   "devDependencies": {
     "@ionic/app-scripts": "3.2.1",
     "@ionic/lab": "1.0.21",
     "typescript": "~2.6.2"
   },
-  "description": "An Ionic project"
+  "description": "An Ionic project",
+  "cordova": {
+    "platforms": [
+      "android"
+    ]
+  }
 }

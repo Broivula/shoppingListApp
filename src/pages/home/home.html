@@ -1,26 +1,52 @@
 
-<ion-content padding>
+  <ion-header>
+    <ion-toolbar color="primary">
+      <button ion-button [solid]="true" color="primary2" (click)="toggleMenuLeft()"><ion-icon name="menu" ></ion-icon></button>
+    </ion-toolbar>
+  </ion-header>
+
+
+    <ion-nav #myContent [root]="rootPage"></ion-nav>
+
+  <ion-content padding>
+
+    <ion-menu [content]="myContent" side="start" [swipeEnabled]="false">
+      <ion-list no-lines="true" no-border="true" >
+        <ion-item><button ion-button [full]="true" [large]="true" ><ion-icon item-start name="trending-up"></ion-icon>statistics</button></ion-item>
+        <ion-item><button ion-button [full]="true" (click)="openSettings()" [large]="true" ><ion-icon item-start name="settings"></ion-icon>settings</button></ion-item>
+      </ion-list>
+    </ion-menu>
 
   <div *ngIf="!usernameBool">
+    <ion-item >
     <ion-input placeholder="anna käyttäjänimi" type="text" #nameInput></ion-input>
-    <button ion-button (click)="enterUsername()">sisään!</button>
+    <button ion-button (click)="enterUsername()" item-end>sisään!</button>
+    </ion-item>
   </div>
 
 
-    <button ion-button (click)="getList()">Get shopping list!</button>
 
-    <ion-list *ngIf="usernameBool" inset="true">
-      <ion-item *ngFor="let entry of shoppingListData">
+    <ion-list *ngIf="usernameBool"  #listOfItems>
+      <ion-item *ngFor="let entry of shoppingListData" text-wrap [id]="entry.id" >
         <h2 float-start id="itemName">{{entry.item}}</h2>
-        <p id="userName">{{entry.user}}</p>
-        <p>{{entry.date | date:"dd/MM/yy"}}</p>
-        <button ion-button color="danger" value="{{entry.item}}" (click)="deleteItem($event)" float-end  >X</button>
+        <p float-start id="userName"><i>{{entry.user}}</i></p>
+        <p item-end>{{entry.date | date:"dd/MM/yy"}}</p>
+        <p float-start padding-left="10px" >{{entry.price}}€</p>
+        <button ion-button color="danger" value="{{entry.item}}" (click)="deleteItem(entry.item)" id="deleteButton" item-end >X</button>
       </ion-item>
      </ion-list>
+
+    <ion-item no-lines="true">
+      <div *ngIf="usernameBool">
+        <h2 float-right>Yht. {{this.totalCost}}€</h2>
+      </div>
+    </ion-item>
 
   <div *ngIf="usernameBool">
   <h3>Lisää esine!!</h3>
     <ion-input placeholder="esine" type="text" #itemInput></ion-input>
     <button ion-button (click)="postNewItem()">lisää esine</button>
   </div>
+
+
 </ion-content>

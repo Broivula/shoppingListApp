@@ -1,11 +1,14 @@
 {
   "name": "shoppingListApp",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "ionic-angular",
   "proxies": [
     {
       "path": "/node",
       "proxyUrl": "http://192.168.8.101/node"
     }
-  ]
+  ],
+  "app_id": ""
 }

@@ -8,11 +8,29 @@ page-home {
   }
 
   #userName{
-    font-style: italic;
-    padding-right: auto;
+    float: end;
+    margin-left: 4px;
+    margin-right: 2px;
+  }
+
+  #deleteButton{
+    border-radius: 4px;
+    font-size: large;
+    margin-left: 10px;
+    margin-right: 0;
   }
 
   #itemName{
 
+  }
+
+  .list-md {
+    .item-block{
+       .item-inner #second {
+        border-bottom: 2px solid #dedede !important;
+        border-top: 1px solid #dedede !important;
+        background-color: #dedede !important;
+      }
+    }
   }
 }
