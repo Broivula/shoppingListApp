@@ -25,19 +25,21 @@
   </div>
 
 
-
     <ion-list *ngIf="usernameBool"  #listOfItems>
-      <ion-item *ngFor="let entry of shoppingListData" text-wrap [id]="entry.id" >
-        <h2 float-start id="itemName">{{entry.item}}</h2>
-        <p float-start id="userName"><i>{{entry.user}}</i></p>
-        <p item-end>{{entry.date | date:"dd/MM/yy"}}</p>
-        <p float-start padding-left="10px" >{{entry.price}}€</p>
-        <button ion-button color="danger" value="{{entry.item}}" (click)="deleteItem(entry.item)" id="deleteButton" item-end >X</button>
+      <ion-item *ngFor="let entry of shoppingListData" >
+        <ion-row id="rowParent">
+        <ion-col id="itemName"><h2 class="wrap-text">{{entry.item}}</h2></ion-col>
+          <ion-col id="userName"> <p ><i>{{entry.user}}</i></p></ion-col>
+          <ion-col  id="dateName"> <p>{{entry.date | date:"dd/MM"}}</p></ion-col>
+          <ion-col id="priceName" >  <p  padding-left="10px" >{{entry.price}}€</p></ion-col>
+          <button  ion-button color="completed"  (click)="buyItem({item:entry.item, price:entry.price})" id="deleteButton" ><ion-icon name="checkbox" #checkMarkIcon></ion-icon></button>
+        </ion-row>
+        <button ion-button color="danger" (click)="deleteItem({item:entry.item, id:entry.id})" item-left>x</button>
       </ion-item>
      </ion-list>
 
-    <ion-item no-lines="true">
-      <div *ngIf="usernameBool">
+    <ion-item no-lines="true" *ngIf="usernameBool">
+      <div >
         <h2 float-right>Yht. {{this.totalCost}}€</h2>
       </div>
     </ion-item>

@@ -6,31 +6,61 @@ page-home {
   .item-md {
     background: transparent;
   }
+  #rowParent{
+    width: 100%;
+  }
+  #itemName{
+    min-width: 35%;
+  }
+  .wrap-text {
+    white-space: normal;
+  }
 
   #userName{
-    float: end;
-    margin-left: 4px;
-    margin-right: 2px;
+    min-width: 15%;
   }
-
   #deleteButton{
     border-radius: 4px;
-    font-size: large;
+  //  font-size: large;
     margin-left: 10px;
     margin-right: 0;
+    min-width: 15%;
   }
 
-  #itemName{
-
+  #priceName{
+    min-width: 10%;
+    margin-right: 6px;
   }
 
-  .list-md {
-    .item-block{
-       .item-inner #second {
-        border-bottom: 2px solid #dedede !important;
-        border-top: 1px solid #dedede !important;
-        background-color: #dedede !important;
-      }
+  #dateName{
+   min-width: 10%;
+  }
+  .item-input {
+    .input-wrapper{
+      color: black !important;
+      background-color: floralwhite !important;
+      border-radius: 10px;
+      margin-right: 5px;
     }
+
+    box-shadow: none;
+    border-bottom: none;
+  }
+
+  .item-md.item-input.input-has-focus .item-inner { box-shadow: none; border-bottom: none; }
+  .item-md.item-input .item-inner { box-shadow: none; border-bottom: none; }
+  ion-item.item.item-block.item-md.item-input{
+    position:relative;
+    top:200px;
+  }
+
+  #checkMarkIcon{
+    padding: 0;
+    margin: 0;
+    font-size: 1px;
+  }
+
+  .label-md{
+    margin: 0;
   }
 }

@@ -34,6 +34,14 @@ apiurl='http://192.168.8.101/node';
     return this.http.post('/node/post/item',data,  httpOptions);
   }
 
+  postBuyItem (data){
+    const httpOptions = {
+      headers: {
+        'Content-type': 'application/json',
+      }
+    };
+    return this.http.post('/node/post/buyItem', data, httpOptions);
+  }
 
   registerItem (data) {
     const httpOptions = {
@@ -44,13 +52,14 @@ apiurl='http://192.168.8.101/node';
     return this.http.post('/node/post/register', data, httpOptions)
   }
 
-  deleteItem(item) {
+  deleteItem(data) {
     const httpOptions = {
       headers: {
         'Content-type': 'application/json',
       },
       body:{
-        item:item
+        item:data.item,
+        id:data.id,
       }
     };
     return this.http.delete('/node/delete/item', httpOptions);

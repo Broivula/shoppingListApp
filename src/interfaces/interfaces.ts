@@ -3,7 +3,7 @@ export interface iShoppingList {
   'user': string,
   'price'?:number,
   'date': string,
-  'id'?:string,
+  'id'?:number,
 }
 
 export interface iRegisteredItems {

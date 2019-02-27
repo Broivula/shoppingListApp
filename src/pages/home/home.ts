@@ -47,7 +47,8 @@ export class HomePage {
   getList() {
     this.data.getShoppingList().subscribe((res: iShoppingList[]) => {
       this.shoppingListData = res;
-      this.totalCostOfItems();
+      this.totalCost = this.totalCostOfItems();
+      console.log(this.shoppingListData);
     })
   }
 
@@ -66,29 +67,32 @@ export class HomePage {
   }
 
 
-  postNewItem (item?) {
+  postNewItem () {
 
     let tempItem = this.itemInput['_value'];
     if(tempItem.toString().length > 2) {
       tempItem = tempItem.toString().toLowerCase();
-      if (this.checkForRegisteringItem(tempItem)) {
-        console.log('vanha esine, postataan databaseen');
-        if (tempItem.toString().length > 1) {
-          this.form.value.item = tempItem;
-          this.form.value.user = this.userName;
-          this.data.postItem(this.form.value).subscribe(res => {
-            this.getList();
-          });
-          console.log(this.itemInput['_value']);
-        }
-      }
-    }
+
+      new Promise((resolve, reject) => {
+        resolve (this.checkForRegisteringItem(tempItem))
+      }).then( (resolve) => {
+        console.log(resolve);
+      })
+    }}
+
+  buyItem (data){
+  //  data.append('user', this.userName);
+    data.user = this.userName;
+    this.data.postBuyItem(data).subscribe( res => {
+      console.log(res);
+    })
   }
 
-  deleteItem (item) {
-    this.data.deleteItem(item).subscribe( res => {
+  deleteItem (data) {
+    console.log(data);
+    this.data.deleteItem(data).subscribe( res => {
       for(let entry of this.shoppingListData){
-        if(entry === item){
+        if(entry.item == data.item && entry.id == data.id){
           let index = this.shoppingListData.indexOf(entry);
           this.shoppingListData.splice(index, 1)
         }
@@ -107,17 +111,30 @@ export class HomePage {
     event.complete();
   }
 
-  checkForRegisteringItem (searchTerm):boolean {
-    new Promise((resolve, reject) => {
+
+  // dear lord what have I done....
+  //..this is why you don't fucking code for 13h without any breaks
+ async checkForRegisteringItem (searchTerm) {
+
+   let tempItem = this.itemInput['_value'];
 
       this.data.checkForNewItem().subscribe( res => {
-        console.log(res);
-        console.log('searcterm: ' + searchTerm);
+       // console.log(res);
+       // console.log('searcterm: ' + searchTerm);
        for(let entry of res){
+        // console.log('comparing: ' + entry.item + ' and ' + searchTerm);
           if(entry.item == searchTerm){
+           // console.log('bingo!!');
+            if (tempItem.toString().length > 1) {
+              this.form.value.item = tempItem;
+              this.form.value.user = this.userName;
+              this.data.postItem(this.form.value).subscribe(res => {
+                this.getList();
+              });
+            }
             //oli jo olemassa yksi versio, ei tehdä mitään
             //vois kyllä kirjottaa paremman hakufunktion jossain vaiheessa
-            return true
+            return true;
           }}
         //esinettä ei ole rekisteröity
         let alert = this.alertController.create({
@@ -129,9 +146,8 @@ export class HomePage {
         });
         alert.present();
         alert.onDidDismiss(() =>{this.openSettings({item:searchTerm});});
-      })
-    });
-    return true
+      });
+    return false
   }
 
   openSettings(params?) {
@@ -144,8 +160,8 @@ export class HomePage {
     this.totalCost = 0;
     for(let e of this.shoppingListData){
       this.totalCost += e.price;
-      this.totalCost.toFixed(2)
     }
+    return this.totalCost.toFixed(2)
   }
 
 
