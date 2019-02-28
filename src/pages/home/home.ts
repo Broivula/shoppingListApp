@@ -26,6 +26,7 @@ export class HomePage {
   private userName : string = null;
   public form: FormGroup;
   public totalCost;
+  public searchString;
 
 
   constructor(
@@ -69,22 +70,24 @@ export class HomePage {
 
   postNewItem () {
 
-    let tempItem = this.itemInput['_value'];
-    if(tempItem.toString().length > 2) {
-      tempItem = tempItem.toString().toLowerCase();
+
+
+    if(this.searchString.toString().length > 2) {
+      this.searchString= this.searchString.toString().toLowerCase();
 
       new Promise((resolve, reject) => {
-        resolve (this.checkForRegisteringItem(tempItem))
-      }).then( (resolve) => {
-        console.log(resolve);
+        resolve (this.checkForRegisteringItem(this.searchString))
+      }).then( (res) => {
+        console.log(this.itemInput);
+        //tyhjennetään tekstikenttä
       })
     }}
 
   buyItem (data){
-  //  data.append('user', this.userName);
     data.user = this.userName;
     this.data.postBuyItem(data).subscribe( res => {
-      console.log(res);
+      //esine ostettu, poistetaan listalta
+      this.deleteItem(data);
     })
   }
 
@@ -119,10 +122,7 @@ export class HomePage {
    let tempItem = this.itemInput['_value'];
 
       this.data.checkForNewItem().subscribe( res => {
-       // console.log(res);
-       // console.log('searcterm: ' + searchTerm);
        for(let entry of res){
-        // console.log('comparing: ' + entry.item + ' and ' + searchTerm);
           if(entry.item == searchTerm){
            // console.log('bingo!!');
             if (tempItem.toString().length > 1) {
@@ -132,8 +132,6 @@ export class HomePage {
                 this.getList();
               });
             }
-            //oli jo olemassa yksi versio, ei tehdä mitään
-            //vois kyllä kirjottaa paremman hakufunktion jossain vaiheessa
             return true;
           }}
         //esinettä ei ole rekisteröity

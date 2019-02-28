@@ -29,10 +29,10 @@
       <ion-item *ngFor="let entry of shoppingListData" >
         <ion-row id="rowParent">
         <ion-col id="itemName"><h2 class="wrap-text">{{entry.item}}</h2></ion-col>
-          <ion-col id="userName"> <p ><i>{{entry.user}}</i></p></ion-col>
-          <ion-col  id="dateName"> <p>{{entry.date | date:"dd/MM"}}</p></ion-col>
-          <ion-col id="priceName" >  <p  padding-left="10px" >{{entry.price}}€</p></ion-col>
-          <button  ion-button color="completed"  (click)="buyItem({item:entry.item, price:entry.price})" id="deleteButton" ><ion-icon name="checkbox" #checkMarkIcon></ion-icon></button>
+          <ion-col id="userName"> <p padding-top="10%"><i>{{entry.user}}</i></p></ion-col>
+          <ion-col  id="dateName"> <p padding-top="10%"> {{entry.date | date:"dd/MM"}}</p></ion-col>
+          <ion-col id="priceName" >  <p padding-top="10%">{{entry.price}}€</p></ion-col>
+          <button  ion-button color="completed"  (click)="buyItem({item:entry.item, price:entry.price, id:entry.id})" id="deleteButton" ><ion-icon name="checkbox" #checkMarkIcon></ion-icon></button>
         </ion-row>
         <button ion-button color="danger" (click)="deleteItem({item:entry.item, id:entry.id})" item-left>x</button>
       </ion-item>
@@ -46,7 +46,7 @@
 
   <div *ngIf="usernameBool">
   <h3>Lisää esine!!</h3>
-    <ion-input placeholder="esine" type="text" #itemInput></ion-input>
+    <ion-input placeholder="esine" [(ngModel)]="searchString" type="text" #itemInput></ion-input>
     <button ion-button (click)="postNewItem()">lisää esine</button>
   </div>
 
