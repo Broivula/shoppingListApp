@@ -71,14 +71,14 @@ export class HomePage {
 
   detectSwipe(evt, data){
 
- //   console.log(evt);
-    console.log(data);
+   // console.log(evt);
+   // console.log(data);
     this.elementRef = evt['_elementRef'].nativeElement;
     let diff = Math.abs(evt['_touches'].diff);
     let dir = evt.swipeDirection;
     this.fadeElement(this.elementRef, diff);
     if( dir == 'prev' && diff > 220 && this.canBuy ) {
-      //item bought
+      console.log('bought an item!1');
       this.canBuy = false;
       this.buyItem(data);
     }else if(dir == 'next' && diff > 220 && this.canDelete){
@@ -188,7 +188,7 @@ export class HomePage {
 
     let amount = 1 - (diff / 220);
     console.log(amount);
-    this.renderer.setStyle(elem,'opacity',amount )
+    this.renderer.setStyle(elem,'opacity',amount );
   }
 
   restoreElement() {

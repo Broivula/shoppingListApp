@@ -56,9 +56,26 @@ $colors: (
 // Material Design only Sass variables can go here
 
 .md {
+  padding: 0;
   .menu-inner {
     background-color: #007d62 !important;
   }
+}
+
+.scroll-content{
+  padding: 0 !important;
+}
+
+.card-md{
+  width: 100% !important;
+  .card-header-md{
+   padding: 0;
+  }
+}
+
+.card-md-primary{
+  color: floralwhite !important;
+  background:rgba(255, 192, 14, 0.69) !important;
 }
 
 

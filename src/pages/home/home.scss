@@ -1,10 +1,12 @@
 page-home {
   .content-md{
     background-color: #00eaaa !important;
+    padding: 0 !important;
   }
 
   .item-md {
     background: transparent;
+    padding: 0 !important;
   }
   #rowParent{
     width: 100%;
@@ -49,12 +51,20 @@ page-home {
     border-bottom: none;
   }
 
+
   .item-md.item-input.input-has-focus .item-inner { box-shadow: none; border-bottom: none; }
   .item-md.item-input .item-inner { box-shadow: none; border-bottom: none; }
   ion-item.item.item-block.item-md.item-input{
     position:relative;
     top:200px;
   }
+
+
+  //ion-item.item.item-block.item-md{
+  //  margin-top: 10px;
+  //  background-color:#FFC00E;
+  //  opacity: 10%;
+ // }
 
   #checkMarkIcon{
     padding: 0;
