@@ -8,6 +8,7 @@ page-home {
   }
   #rowParent{
     width: 100%;
+ //   animation: moveWithTransform 1s linear infinite;
   }
   #itemName{
     min-width: 35%;
@@ -64,5 +65,17 @@ page-home {
   .label-md{
     margin: 0;
   }
+
+}
+
+@keyframes moveWithTransform {
+
+  0%{
+    opacity:1 ;
+  }
+  100%{
+    opacity: 0;
+  }
+
 
 }

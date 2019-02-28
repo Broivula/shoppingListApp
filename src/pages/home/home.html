@@ -8,7 +8,7 @@
 
     <ion-nav #myContent [root]="rootPage"></ion-nav>
 
-  <ion-content padding>
+  <ion-content padding >
 
     <ion-menu [content]="myContent" side="start" [swipeEnabled]="false">
       <ion-list no-lines="true" no-border="true" >
@@ -25,16 +25,21 @@
   </div>
 
 
-    <ion-list *ngIf="usernameBool"  #listOfItems>
+
+    <ion-list *ngIf="usernameBool"  #listOfItems >
       <ion-item *ngFor="let entry of shoppingListData" >
+        <ion-slides (ionSlideDrag)="detectSwipe($event, {item:entry.item, price:entry.price, id:entry.id})"  (touchend)="this.restoreElement($event)">
+          <ion-slide>
         <ion-row id="rowParent">
         <ion-col id="itemName"><h2 class="wrap-text">{{entry.item}}</h2></ion-col>
           <ion-col id="userName"> <p padding-top="10%"><i>{{entry.user}}</i></p></ion-col>
           <ion-col  id="dateName"> <p padding-top="10%"> {{entry.date | date:"dd/MM"}}</p></ion-col>
           <ion-col id="priceName" >  <p padding-top="10%">{{entry.price}}€</p></ion-col>
-          <button  ion-button color="completed"  (click)="buyItem({item:entry.item, price:entry.price, id:entry.id})" id="deleteButton" ><ion-icon name="checkbox" #checkMarkIcon></ion-icon></button>
+       <!--   <button  ion-button color="completed"  (click)="buyItem({item:entry.item, price:entry.price, id:entry.id})" id="deleteButton" ><ion-icon name="checkbox" #checkMarkIcon></ion-icon></button> -->
         </ion-row>
-        <button ion-button color="danger" (click)="deleteItem({item:entry.item, id:entry.id})" item-left>x</button>
+          </ion-slide>
+        </ion-slides>
+    <!--    <button ion-button color="danger" (click)="deleteItem({item:entry.item, id:entry.id})" item-left>x</button>-->
       </ion-item>
      </ion-list>
 

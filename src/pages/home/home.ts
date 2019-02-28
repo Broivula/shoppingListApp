@@ -1,4 +1,4 @@
-import {Component, Input, ViewChild, ViewChildren} from '@angular/core';
+import {Component, Input, Renderer2, ViewChild, ViewChildren} from '@angular/core';
 import {List, NavController} from 'ionic-angular';
 import { MediaProvider } from "../../providers/media/media";
 import { iShoppingList } from "../../interfaces/interfaces";
@@ -8,7 +8,6 @@ import { Observable } from "rxjs";
 import { MenuController } from "ionic-angular";
 import { SettingsPage } from "../settings/settings";
 import { AlertController } from "ionic-angular";
-import {decimalDigest} from "@angular/compiler/src/i18n/digest";
 
 @Component({
   selector: 'page-home',
@@ -24,9 +23,12 @@ export class HomePage {
   registeredItems = [];
   public usernameBool: boolean = false;
   private userName : string = null;
+  private canBuy : boolean = true;
+  private canDelete : boolean = true;
   public form: FormGroup;
   public totalCost;
   public searchString;
+  public elementRef;
 
 
   constructor(
@@ -35,6 +37,7 @@ export class HomePage {
     private formbuilder: FormBuilder,
     private menu: MenuController,
     private alertController: AlertController,
+    private renderer: Renderer2
   ) {
     this.form = this.formbuilder.group({
       item:[''],
@@ -62,15 +65,30 @@ export class HomePage {
       this.userName = this.nameInput['_value'];
       this.userName = this.userName.toLowerCase();
       this.usernameBool = true;
-
       this.getList();
     }
   }
 
+  detectSwipe(evt, data){
+
+ //   console.log(evt);
+    console.log(data);
+    this.elementRef = evt['_elementRef'].nativeElement;
+    let diff = Math.abs(evt['_touches'].diff);
+    let dir = evt.swipeDirection;
+    this.fadeElement(this.elementRef, diff);
+    if( dir == 'prev' && diff > 220 && this.canBuy ) {
+      //item bought
+      this.canBuy = false;
+      this.buyItem(data);
+    }else if(dir == 'next' && diff > 220 && this.canDelete){
+      //item deleted
+      this.canDelete = false;
+      this.deleteItem(data);
+    }
+}
 
   postNewItem () {
-
-
 
     if(this.searchString.toString().length > 2) {
       this.searchString= this.searchString.toString().toLowerCase();
@@ -80,6 +98,7 @@ export class HomePage {
       }).then( (res) => {
         console.log(this.itemInput);
         //tyhjennetään tekstikenttä
+        this.searchString = '';
       })
     }}
 
@@ -97,9 +116,11 @@ export class HomePage {
       for(let entry of this.shoppingListData){
         if(entry.item == data.item && entry.id == data.id){
           let index = this.shoppingListData.indexOf(entry);
-          this.shoppingListData.splice(index, 1)
+          this.shoppingListData.splice(index, 1);
         }
       }
+      this.canDeleteAgain();
+      this.canBuyAgain();
       this.getList();
     })
   }
@@ -113,6 +134,7 @@ export class HomePage {
     }
     event.complete();
   }
+
 
 
   // dear lord what have I done....
@@ -162,11 +184,35 @@ export class HomePage {
     return this.totalCost.toFixed(2)
   }
 
+  fadeElement(elem,diff){
+
+    let amount = 1 - (diff / 220);
+    console.log(amount);
+    this.renderer.setStyle(elem,'opacity',amount )
+  }
+
+  restoreElement() {
+   // let elem = evt['_elementRef'].nativeElement;
+    if(this.canBuy && this.canDelete)
+    this.renderer.setStyle(this.elementRef, 'opacity', 1)
+  }
 
   toggleMenuLeft() {
-
     this.menu.toggle();
   }
+
+  canBuyAgain(){
+    setTimeout(() =>{
+      this.canBuy = true;
+    },200)
+  }
+
+  canDeleteAgain(){
+    setTimeout(() =>{
+      this.canDelete = true;
+    },200)
+  }
+
 
 
   ionViewDidLoad() {
