@@ -8,4 +8,5 @@ export interface iShoppingList {
 
 export interface iRegisteredItems {
   'item':string,
+  'price':number,
 }

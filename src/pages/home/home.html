@@ -1,6 +1,6 @@
 
-  <ion-header>
-    <ion-toolbar color="primary">
+  <ion-header *ngIf="usernameBool" id="homeHeader" style="animation-iteration-count: 1">
+    <ion-toolbar color="primary3">
       <button ion-button [solid]="true" color="primary2" (click)="toggleMenuLeft()"><ion-icon name="menu" ></ion-icon></button>
     </ion-toolbar>
   </ion-header>
@@ -11,39 +11,56 @@
   <ion-content padding >
 
     <ion-menu [content]="myContent" side="start" [swipeEnabled]="false">
-      <ion-list no-lines="true" no-border="true" >
+      <ion-list no-lines="true" no-border="true" style="padding-top: 30%">
         <ion-item><button ion-button [full]="true" [large]="true" ><ion-icon item-start name="trending-up"></ion-icon>statistics</button></ion-item>
         <ion-item><button ion-button [full]="true" (click)="openSettings()" [large]="true" ><ion-icon item-start name="settings"></ion-icon>settings</button></ion-item>
       </ion-list>
     </ion-menu>
 
-  <div *ngIf="!usernameBool">
-    <ion-item >
-    <ion-input placeholder="anna käyttäjänimi" type="text" #nameInput></ion-input>
-    <button ion-button (click)="enterUsername()" item-end>sisään!</button>
-    </ion-item>
-  </div>
 
-    <ion-refresher slot="fixed" (ionRefresh)="refreshData($event)">
-      <ion-refresher-content
-        pullingIcon="arrow-dropdown">
-      </ion-refresher-content>
-    </ion-refresher>
+    <div *ngIf="!usernameBool" >
+      <div class="nameButton" #nameButtonDiv style="display: flex; flex-direction: row; justify-content: center; align-items: center; padding-top: 50%; animation-iteration-count: 1; animation-fill-mode: forwards; animation-delay: 3s">
+        <button ion-button [large]="true" (click)="enterUsername('Heli')" >Heli</button>
+        <button ion-button [large]="true" (click)="enterUsername('Elias')">Elias</button>
+      </div>
+    </div>
 
-    <ion-list *ngIf="usernameBool"  #listOfItems >
-      <ion-item *ngFor="let entry of shoppingListData" >
-        <ion-slides (ionSlideDrag)="detectSwipe($event, {item:entry.item, price:entry.price, id:entry.id})"  (touchend)="this.restoreElement($event)">
+
+    <ion-list *ngIf="usernameBool"  #listOfItems style="padding-top: 30%; max-height: 70%; overflow-y: scroll;" (touchstart)="getElem()" (touchend)="this.restoreElement()">
+      <ion-item *ngFor="let entry of shoppingListData">
+        <ion-slides  (ionSlideDrag)="detectSwipe($event, {item:entry.item, price:entry.price, id:entry.id})">
           <ion-slide>
-            <ion-card color="primary" no-padding>
-              <ion-card-header>
+            <ion-card color="primary" no-padding style="display: flex; flex-direction: row; align-items: stretch;">
+              <div>
+                <ion-thumbnail>
+                  <img src="../../assets/imgs/logo.png">
+                </ion-thumbnail>
+              </div>
+              <div style="flex-basis: 200px;">
                 <ion-card-title color="floralwhite">{{entry.item}}</ion-card-title>
-                <h3>{{entry.price}}€</h3>
-              </ion-card-header>
-              <ion-card-content>
-                {{entry.user}},
-                {{entry.date|date:"dd/MM"}}
-              </ion-card-content>
+              </div>
+              <div style="display: flex; flex-direction: column; padding-top: 15px; padding-right: 5px;">
+                <div>
+                  <h3>{{entry.price}}€</h3>
+                </div>
+                <div>
+                  <i>{{entry.date|date:"dd/MM"}}</i>
+                </div>
+                <div>
+                  <i> {{entry.user}} </i>
+                </div>
+              </div>
+        <div>
+
+          <ion-thumbnail >
+            <img src="../../assets/imgs/splash.png">
+          </ion-thumbnail>
+        </div>
+
+
+
             </ion-card>
+    <!--    <ion-row id="rowParent">
     <!--    <ion-row id="rowParent">
         <ion-col id="itemName"><h2 class="wrap-text">{{entry.item}}</h2></ion-col>
           <ion-col id="userName"> <p padding-top="10%"><i>{{entry.user}}</i></p></ion-col>
@@ -63,11 +80,28 @@
       </div>
     </ion-item>
 
-  <div *ngIf="usernameBool">
-  <h3>Lisää esine!!</h3>
-    <ion-input placeholder="esine" [(ngModel)]="searchString" type="text" #itemInput></ion-input>
-    <button ion-button (click)="postNewItem()">lisää esine</button>
+
+
+
+    <div *ngIf="usernameBool">
+      <div *ngIf="suggestedItems.length > 0" style="margin-left: 5%">
+        <ion-list>
+          <button *ngFor="let suggestion of suggestedItems" ion-button (click)="postNewItem(suggestion.item)" >{{suggestion.item}}</button>
+        </ion-list>
+      </div>
+      <ion-input placeholder="esine" [(ngModel)]="searchString" (ionChange)="suggestionFunction()" type="text" #itemInput style="
+      background-color: floralwhite; border-radius: 5px; width: 70%; height: 60px;
+       margin-left: 10%; font-size: 30px; text-align: center;"
+      ></ion-input>
+      <ion-fab>
+        <button ion-fab color="primary" (click)="postNewItem()" style="position: fixed; bottom: 30px; right: 20px; font-size: 50px; color: floralwhite">+</button>
+      </ion-fab>
+   <!-- <button ion-button (click)="postNewItem()">lisää esine</button> -->
   </div>
 
+    <ion-refresher slot="fixed" [enabled]="isRefresherEnabled()" style="padding-top: 20%" [pullMin]="200" (ionRefresh)="refreshData($event)">
+      <ion-refresher-content pullingIcon="arrow-dropdown" refreshingSpinner="circles" refreshingText="Refreshing..."></ion-refresher-content>
+    </ion-refresher>
 
 </ion-content>
+

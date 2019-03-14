@@ -1,9 +1,14 @@
 page-home {
   .content-md{
-    background-color: #00eaaa !important;
+    background-color:  #ffc00e !important;
     padding: 0 !important;
   }
-
+  .nameButton{
+    animation: smoothEntranceButtons 1s linear infinite;
+  }
+  #homeHeader{
+    animation: smoothEntranceHeader 0.5s linear infinite;
+  }
   .item-md {
     background: transparent;
     padding: 0 !important;
@@ -41,8 +46,8 @@ page-home {
   }
   .item-input {
     .input-wrapper{
-      color: black !important;
-      background-color: floralwhite !important;
+      color: floralwhite !important;
+      background-color: black !important;
       border-radius: 10px;
       margin-right: 5px;
     }
@@ -77,6 +82,31 @@ page-home {
   }
 
 }
+
+@keyframes smoothEntranceButtons {
+  0%{
+    position: absolute; bottom: 50%; left: 25%;
+  }
+  50%{
+    position: absolute; bottom: 57%;left: 25%;
+  }
+  100%{
+    position: absolute; bottom: 60%;left: 25%;
+  }
+}
+
+@keyframes smoothEntranceHeader {
+  0%{
+    position: inherit; left: -50px;
+  }
+  50%{
+    position: inherit; left: -25px;
+  }
+  100%{
+    position: inherit; left: 0px;
+  }
+}
+
 
 @keyframes moveWithTransform {
 

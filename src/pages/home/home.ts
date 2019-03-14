@@ -1,13 +1,14 @@
 import {Component, Input, Renderer2, ViewChild, ViewChildren} from '@angular/core';
 import {List, NavController} from 'ionic-angular';
 import { MediaProvider } from "../../providers/media/media";
-import { iShoppingList } from "../../interfaces/interfaces";
+import {iRegisteredItems, iShoppingList} from "../../interfaces/interfaces";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Socket } from "ng-socket-io";
 import { Observable } from "rxjs";
 import { MenuController } from "ionic-angular";
 import { SettingsPage } from "../settings/settings";
 import { AlertController } from "ionic-angular";
+import { Platform } from 'ionic-angular';
 
 @Component({
   selector: 'page-home',
@@ -15,20 +16,24 @@ import { AlertController } from "ionic-angular";
 })
 export class HomePage {
 
+  @ViewChild('nameButtonDiv')nameButtons:HTMLDivElement;
   @ViewChild('nameInput')nameInput: Input;
   @ViewChild('itemInput')itemInput: Input;
   @ViewChildren('listOfItems')listOfItems: List;
 
   shoppingListData = [];
   registeredItems = [];
+  suggestedItems = [];
+  platformReady=false;
   public usernameBool: boolean = false;
   private userName : string = null;
   private canBuy : boolean = true;
   private canDelete : boolean = true;
   public form: FormGroup;
   public totalCost;
-  public searchString;
+  public searchString = '';
   public elementRef;
+  isTouchingList = false;
 
 
   constructor(
@@ -37,8 +42,10 @@ export class HomePage {
     private formbuilder: FormBuilder,
     private menu: MenuController,
     private alertController: AlertController,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private platform: Platform,
   ) {
+    //the app has loaded
     this.form = this.formbuilder.group({
       item:[''],
       user:['']
@@ -56,24 +63,30 @@ export class HomePage {
     })
   }
 
+  getRegisteredItems(){
+    this.data.checkForNewItem().subscribe((res:iRegisteredItems[]) =>{
+     this.registeredItems = res;
+    })
+  }
+
+  enterUsername (name) {
+    this.userName = name;
+    this.usernameBool = true;
+   // this.getList();
+  }
 
 
-  enterUsername () {
-    let tempStr = this.nameInput['_value'];
-    if(tempStr.toString().length > 1)
-    {
-      this.userName = this.nameInput['_value'];
-      this.userName = this.userName.toLowerCase();
-      this.usernameBool = true;
-      this.getList();
-    }
+  getElem(){
+    this.isTouchingList =true;
   }
 
   detectSwipe(evt, data){
 
    // console.log(evt);
    // console.log(data);
+    this.isTouchingList =true;
     this.elementRef = evt['_elementRef'].nativeElement;
+    console.log(this.elementRef);
     let diff = Math.abs(evt['_touches'].diff);
     let dir = evt.swipeDirection;
     this.fadeElement(this.elementRef, diff);
@@ -88,15 +101,19 @@ export class HomePage {
     }
 }
 
-  postNewItem () {
+  postNewItem (name?) {
 
-    if(this.searchString.toString().length > 2) {
-      this.searchString= this.searchString.toString().toLowerCase();
+    console.log(name);
 
+
+    let itemName = name ? name.toString() : this.searchString.toString().toLowerCase();
+
+    console.log(itemName);
+    if(itemName.length > 2) {
       new Promise((resolve, reject) => {
-        resolve (this.checkForRegisteringItem(this.searchString))
+        resolve (this.checkForRegisteringItem(itemName))
       }).then( (res) => {
-        console.log(this.itemInput);
+      //  console.log(this.itemInput);
         //tyhjennetään tekstikenttä
         this.searchString = '';
       })
@@ -137,23 +154,18 @@ export class HomePage {
 
 
 
+
   // dear lord what have I done....
   //..this is why you don't fucking code for 13h without any breaks
  async checkForRegisteringItem (searchTerm) {
-
-   let tempItem = this.itemInput['_value'];
 
       this.data.checkForNewItem().subscribe( res => {
        for(let entry of res){
           if(entry.item == searchTerm){
            // console.log('bingo!!');
-            if (tempItem.toString().length > 1) {
-              this.form.value.item = tempItem;
-              this.form.value.user = this.userName;
-              this.data.postItem(this.form.value).subscribe(res => {
-                this.getList();
-              });
-            }
+            this.form.value.item = searchTerm;
+            this.form.value.user = this.userName;
+            this.data.postItem(this.form.value).subscribe(res => {this.getList();});
             return true;
           }}
         //esinettä ei ole rekisteröity
@@ -187,14 +199,16 @@ export class HomePage {
   fadeElement(elem,diff){
 
     let amount = 1 - (diff / 220);
-    console.log(amount);
+   // console.log(amount);
     this.renderer.setStyle(elem,'opacity',amount );
   }
 
-  restoreElement() {
+  restoreElement(evt) {
    // let elem = evt['_elementRef'].nativeElement;
-    if(this.canBuy && this.canDelete)
-    this.renderer.setStyle(this.elementRef, 'opacity', 1)
+    if(this.canBuy && this.canDelete && this.elementRef)
+    this.renderer.setStyle(this.elementRef, 'opacity', 1);
+
+    this.isTouchingList = false;
   }
 
   toggleMenuLeft() {
@@ -213,12 +227,32 @@ export class HomePage {
     },200)
   }
 
+  isRefresherEnabled(){
+   return !this.isTouchingList;
+  }
+
+  suggestionFunction(){
+    this.suggestedItems.length = 0;
+    let suggestion = this.searchString.toLowerCase();
+
+    if(suggestion.length > 3) {
+      this.registeredItems.filter((entry:iRegisteredItems) => {
+        let item = new RegExp(suggestion);
+        if(item.test(entry.item)){
+          this.suggestedItems.push(entry);
+        }
+      })
+    }
+
+  }
 
 
   ionViewDidLoad() {
-    if(this.menu.isOpen()){
-      this.toggleMenuLeft();
-    }
+    if(this.menu.isOpen()){this.toggleMenuLeft();}
+
+    this.getList();
+    this.getRegisteredItems();
+    console.log(this.nameButtons)
 
    // this.socket.connect();
     //*for offline testing
