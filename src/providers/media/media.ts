@@ -18,11 +18,11 @@ apiurl='http://192.168.8.101/node';
   }
 
   getShoppingList() {
-    return this.http.get<iShoppingList[]>('/node/get/list');
+    return this.http.get<iShoppingList[]>('http://192.168.8.101/node/get/list');
   }
 
-  checkForNewItem() {
-    return this.http.get<iRegisteredItems[]>('/node/get/registeredItems')
+  getRegisteredItems() {
+    return this.http.get<iRegisteredItems[]>('http://192.168.8.101/node/get/registeredItems')
   }
 
   postItem (data) {
@@ -31,7 +31,7 @@ apiurl='http://192.168.8.101/node';
         'Content-type': 'application/json',
       }
     };
-    return this.http.post('/node/post/item',data,  httpOptions);
+    return this.http.post('http://192.168.8.101/node/post/item',data,  httpOptions);
   }
 
   postBuyItem (data){
@@ -40,7 +40,7 @@ apiurl='http://192.168.8.101/node';
         'Content-type': 'application/json',
       }
     };
-    return this.http.post('/node/post/buyItem', data, httpOptions);
+    return this.http.post('http://192.168.8.101/node/post/buyItem', data, httpOptions);
   }
 
   registerItem (data) {
@@ -49,7 +49,7 @@ apiurl='http://192.168.8.101/node';
         'Content-type': 'application/json',
       }
     };
-    return this.http.post('/node/post/register', data, httpOptions)
+    return this.http.post('http://192.168.8.101/node/post/register', data, httpOptions)
   }
 
   deleteItem(data) {
@@ -62,7 +62,7 @@ apiurl='http://192.168.8.101/node';
         id:data.id,
       }
     };
-    return this.http.delete('/node/delete/item', httpOptions);
+    return this.http.delete('http://192.168.8.101/node/delete/item', httpOptions);
   }
 }
 

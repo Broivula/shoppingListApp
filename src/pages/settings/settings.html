@@ -9,8 +9,9 @@
 
   <p>text</p>
   <form [formGroup]="form">
-  <ion-input type="text" [placeholder]="this.placeHolder" [value]="this.placeHolder" formControlName="item" #itemName></ion-input>
-  <ion-input type="text"  placeholder="hinta" formControlName="price"></ion-input>
+    <ion-input *ngIf="!visitingFromHomePage" type="text" placeholder="esineen nimi" formControlName="item" #itemName></ion-input>
+    <ion-input *ngIf="visitingFromHomePage" type="text" [placeholder]="this.placeHolder" [value]="this.placeHolder" formControlName="item" #itemName></ion-input>
+    <ion-input type="text"  placeholder="hinta" formControlName="price"></ion-input>
   <button ion-button (click)="registerNewItem()">Lähetä</button>
   </form>
 </ion-content>

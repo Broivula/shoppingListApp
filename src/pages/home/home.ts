@@ -64,10 +64,11 @@ export class HomePage {
   }
 
   getRegisteredItems(){
-    this.data.checkForNewItem().subscribe((res:iRegisteredItems[]) =>{
+    this.data.getRegisteredItems().subscribe((res:iRegisteredItems[]) =>{
      this.registeredItems = res;
     })
   }
+
 
   enterUsername (name) {
     this.userName = name;
@@ -101,7 +102,7 @@ export class HomePage {
     }
 }
 
-  postNewItem (name?) {
+  addNewItem (name?) {
 
     console.log(name);
 
@@ -159,7 +160,7 @@ export class HomePage {
   //..this is why you don't fucking code for 13h without any breaks
  async checkForRegisteringItem (searchTerm) {
 
-      this.data.checkForNewItem().subscribe( res => {
+      this.data.getRegisteredItems().subscribe( res => {
        for(let entry of res){
           if(entry.item == searchTerm){
            // console.log('bingo!!');
@@ -177,7 +178,7 @@ export class HomePage {
             }]
         });
         alert.present();
-        alert.onDidDismiss(() =>{this.openSettings({item:searchTerm});});
+        alert.onDidDismiss(() =>{this.openSettings({item:searchTerm, homePage:this});});
       });
     return false
   }
