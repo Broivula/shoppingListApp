@@ -6,8 +6,7 @@
 </ion-header>
 
 <ion-content padding>
-
-  <p>text</p>
+  
   <form [formGroup]="form">
     <ion-input *ngIf="!visitingFromHomePage" type="text" placeholder="esineen nimi" formControlName="item" #itemName></ion-input>
     <ion-input *ngIf="visitingFromHomePage" type="text" [placeholder]="this.placeHolder" [value]="this.placeHolder" formControlName="item" #itemName></ion-input>

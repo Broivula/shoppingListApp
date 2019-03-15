@@ -34,9 +34,9 @@ $app-direction: ltr;
 // The "primary" color is the only required color in the map.
 
 $colors: (
-  primary: #2eaa55,
-  primary2: #275b2e,
-  primary3: #2b7342,
+  primary: #ff8a16,
+  primary_darker: #d77415,
+  primary_darkest: #c36317,
   secondary:  #ffc00e,
   danger:     #f53d3d,
   light:      #f4f4f4,
@@ -61,7 +61,7 @@ $colors: (
 .md {
   padding: 0;
   .menu-inner {
-    background-color:  #ffc00e !important;
+    background-color: #afaaa1 !important;
   }
 }
 
@@ -76,9 +76,10 @@ $colors: (
   }
 }
 
+
 .card-md-primary{
   color: floralwhite !important;
-  background: #2aa156 !important;
+  background: #ef7a16 !important;
 }
 
 

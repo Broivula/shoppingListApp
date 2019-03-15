@@ -1,7 +1,7 @@
 
   <ion-header *ngIf="usernameBool" id="homeHeader" style="animation-iteration-count: 1">
-    <ion-toolbar color="primary3">
-      <button ion-button [solid]="true" color="primary2" (click)="toggleMenuLeft()"><ion-icon name="menu" ></ion-icon></button>
+    <ion-toolbar color="primary_darker" style="border-bottom: solid 1px darkgray">
+      <button ion-button [solid]="true" color="primary_darkest" (click)="toggleMenuLeft()"><ion-icon name="menu" ></ion-icon></button>
     </ion-toolbar>
   </ion-header>
 
@@ -27,10 +27,10 @@
 
 
     <ion-list *ngIf="usernameBool"  #listOfItems style="padding-top: 30%; max-height: 70%; overflow-y: scroll;" (touchstart)="getElem()" (touchend)="this.restoreElement()">
-      <ion-item *ngFor="let entry of shoppingListData" no-lines="true">
+      <ion-item *ngFor="let entry of shoppingListData" no-lines="true" style="margin-left: 2%; ">
         <ion-slides  (ionSlideDrag)="detectSwipe($event, {item:entry.item, price:entry.price, id:entry.id})">
           <ion-slide>
-            <ion-card color="primary" no-padding style="display: flex; flex-direction: row; align-items: stretch; max-height: 50px; border-radius: 5px;">
+            <ion-card color="primary" no-padding style="display: flex; flex-direction: row; align-items: stretch; max-height: 50px; max-width: 90%;  border-radius: 5px;  box-shadow: 2px 3px #96460f; border: 1px solid  #96460f">
               <div>
                 <ion-thumbnail >
                   <img src="assets/imgs/logo.png" style="position:relative; bottom: 10px;">
@@ -86,16 +86,30 @@
     <div *ngIf="usernameBool">
       <div *ngIf="suggestedItems.length > 0" style="margin-left: 5%">
         <ion-list>
-          <button *ngFor="let suggestion of suggestedItems" ion-button (click)="addNewItem(suggestion.item)" >{{suggestion.item}}</button>
+          <button *ngFor="let suggestion of suggestedItems" ion-button (click)="addNewItem(suggestion.item)" >+{{suggestion.item}}</button>
         </ion-list>
       </div>
-      <ion-input placeholder="esine" [(ngModel)]="searchString" (ionChange)="suggestionFunction()" type="text" #itemInput style="
-      background-color: floralwhite; border-radius: 5px; width: 70%; height: 60px;
-       margin-left: 10%; font-size: 30px; text-align: center;"
-      ></ion-input>
-      <ion-fab>
-        <button ion-fab color="primary" (click)="addNewItem()" style="position: fixed; bottom: 30px; right: 20px; font-size: 50px; color: floralwhite">+</button>
-      </ion-fab>
+      <div style="display: flex;">
+        <ion-input placeholder="esine" [(ngModel)]="searchString" (ionChange)="suggestionFunction()" type="text" #itemInput style="
+      background-color: floralwhite; border-radius: 5px; border: solid 1px darkgray; max-width: 70%; height: 60px;
+       margin-left: 10%; font-size: 25px; text-align: center;"
+        ></ion-input>
+        <button ion-button color="primary" (click)="addNewItem()" style="position: relative; display:block;
+                                                                                      left: 10px;
+                                                                                      width:50px;
+                                                                                      height:50px;
+                                                                                      line-height:50px;
+                                                                                      border: 2px solid #96460f;
+                                                                                      border-radius: 50%;
+                                                                                      color:floralwhite;
+                                                                                      text-align:center;
+                                                                                      text-decoration:none;
+                                                                                      background: #ff8a16;
+                                                                                      box-shadow: 0 0 3px #96460f;
+                                                                                      font-size:20px;
+                                                                                      font-weight:bold;">+</button>
+      </div>
+
    <!-- <button ion-button (click)="addNewItem()">lisää esine</button> -->
   </div>
 
