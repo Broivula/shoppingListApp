@@ -12,7 +12,7 @@
 
     <ion-menu [content]="myContent" side="start" [swipeEnabled]="false">
       <ion-list no-lines="true" no-border="true" style="padding-top: 30%">
-        <ion-item><button ion-button [full]="true" [large]="true" ><ion-icon item-start name="trending-up"></ion-icon>statistics</button></ion-item>
+        <ion-item><button ion-button [full]="true" (click)="openStatistics({homePage:this})" [large]="true" ><ion-icon item-start name="trending-up"></ion-icon>statistics</button></ion-item>
         <ion-item><button ion-button [full]="true" (click)="openSettings({homePage:this})" [large]="true" ><ion-icon item-start name="settings"></ion-icon>settings</button></ion-item>
       </ion-list>
     </ion-menu>

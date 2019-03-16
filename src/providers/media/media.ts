@@ -25,6 +25,15 @@ apiurl='http://192.168.8.101/node';
     return this.http.get<iRegisteredItems[]>('/node/get/registeredItems')
   }
 
+  getStatisticPictures(){
+    const httpOptions = {
+      headers: {
+        'Content-type': 'application/json',
+      }
+    };
+    return this.http.get('/node/get/history/images', httpOptions);
+  }
+
   postItem (data) {
     const httpOptions = {
       headers: {

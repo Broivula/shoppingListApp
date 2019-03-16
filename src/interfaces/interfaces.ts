@@ -10,3 +10,7 @@ export interface iRegisteredItems {
   'item':string,
   'price':number,
 }
+
+export interface iStatImageResponse {
+  'file_path':string,
+}

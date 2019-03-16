@@ -9,6 +9,7 @@ import { MenuController } from "ionic-angular";
 import { SettingsPage } from "../settings/settings";
 import { AlertController } from "ionic-angular";
 import { Platform } from 'ionic-angular';
+import {StatisticsPage} from "../statistics/statistics";
 
 @Component({
   selector: 'page-home',
@@ -186,7 +187,10 @@ export class HomePage {
   openSettings(params?) {
     console.log('opening settings with these parameters: ' + params);
     this.navCtrl.push(SettingsPage,params);
+  }
 
+  openStatistics(params?){
+    this.navCtrl.push(StatisticsPage, params);
   }
 
   totalCostOfItems(){
