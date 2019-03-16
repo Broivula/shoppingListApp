@@ -18,6 +18,7 @@ import {iStatImageResponse} from "../../interfaces/interfaces";
 export class StatisticsPage {
 
   images=[];
+ rand = null;
 
   constructor(
     public navCtrl: NavController,
@@ -29,9 +30,17 @@ export class StatisticsPage {
   ionViewDidLoad() {
     // first we want to tell the backend to create the picture, then to get the picture itself.
     // but first, let's just get the picture as a proof of thingy
+
     this.data.getStatisticPictures().subscribe((res:iStatImageResponse[]) => {
+     this.rand = this.getInt(51253);
+      console.log(res);
+      this.images.length = 0;
       this.images = res;
     })
+  }
+
+  getInt(maxVal){
+    return Math.floor(Math.random() * Math.floor(maxVal))
   }
 
 }
