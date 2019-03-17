@@ -19,9 +19,9 @@
         <h4 style="text-align: center">Lataa statistiikkaa..</h4>
       </div>
 
-      <ion-item *ngFor="let image of images">
+      <div *ngFor="let image of images">
         <img src="{{image.file_path}}?{{rand}}">
-      </ion-item>
+      </div>
     </ion-list>
 
   </div>
