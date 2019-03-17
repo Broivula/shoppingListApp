@@ -2,4 +2,22 @@ page-settings {
   .content-md{
     background-color: #f5efe4 !important;
   }
+
+  .inputClass{
+    background-color: floralwhite;
+    margin-bottom: 10px;
+    padding-top: 0;
+    border-radius: 2px;
+    border: solid 1px darkgray;
+    max-width: 80%;
+    height: 30px;
+    margin-left: 10%;
+    font-size: 13px;
+    text-align: center;
+  }
+
+  .settings_content_class{
+    border-radius: 4px;
+    padding: 2px;
+  }
 }

@@ -11,6 +11,7 @@ import { HttpClientModule} from "@angular/common/http";
 import { SocketIoModule, SocketIoConfig } from "ng-socket-io";
 import { SettingsPage } from "../pages/settings/settings";
 import { StatisticsPage } from "../pages/statistics/statistics";
+import { WheelSelector } from "@ionic-native/wheel-selector"
 //const config: SocketIoConfig = {url:"http://192.168.8.101/node:2222", options:{path:'/node/socket.io/websocket'}};
 
 
@@ -38,7 +39,8 @@ import { StatisticsPage } from "../pages/statistics/statistics";
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    MediaProvider
+    MediaProvider,
+    WheelSelector
   ]
 })
 export class AppModule {}

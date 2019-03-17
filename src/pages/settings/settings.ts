@@ -3,8 +3,8 @@ import { NavController, NavParams } from 'ionic-angular';
 import { MediaProvider } from "../../providers/media/media";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { AlertController } from "ionic-angular";
-import {HomePage} from "../home/home";
-import {iRegisteredItems} from "../../interfaces/interfaces";
+import { iRegisteredItems } from "../../interfaces/interfaces";
+import { WheelSelector } from "@ionic-native/wheel-selector";
 
 
 /**
@@ -22,6 +22,9 @@ export class SettingsPage {
 
   public form: FormGroup;
   public placeHolder = 'esineen nimi';
+  private registeredItemNames=[];
+  private registeredItemPrices=[];
+  itemToBeChanged=null;
   registeredItems=[];
   visitingFromHomePage= false;
 
@@ -33,6 +36,7 @@ export class SettingsPage {
     private media: MediaProvider,
     private formbuilder: FormBuilder,
     private alertController: AlertController,
+    private wheelSelector: WheelSelector,
     ) {
   this.form = this.formbuilder.group({
     item:[''],
@@ -108,6 +112,35 @@ export class SettingsPage {
     data.redir ? alert.onDidDismiss(() => {homePage.addNewItem(this.form.value.item.toString()); homePage.getRegisteredItems();this.navCtrl.pop();}) : console.log('false');
   }
 
+  openWheelSelector(){
+    this.wheelSelector.show({
+      title:'Valitse esine',
+      positiveButtonText:'Valitse',
+      negativeButtonText:'Poistu',
+      items:[
+        this.registeredItemNames
+      ],
+      defaultItems:[
+        {index:0, value:this.registeredItemNames[(this.registeredItemNames.length / 2)]}
+      ]
+    }).then( result => {
+      //put the picked data onto a inputfield
+      this.itemToBeChanged = result[0].description;
+
+    })
+  }
+
+  mapRegisteredItems(items) {
+    this.registeredItemNames = items.map(entry => {
+      return {description:entry.item};
+    });
+
+    this.registeredItemPrices = items.map(entry => {
+      return entry.price;
+    });
+  }
+
+
 
   ionViewDidLoad() {
     if(this.navParams.get('item')){
@@ -115,10 +148,10 @@ export class SettingsPage {
       let item = this.navParams.get('item');
       this.placeHolder = item;
       this.visitingFromHomePage = true;
-      this.media.getRegisteredItems().subscribe((res:iRegisteredItems[]) =>{this.registeredItems = res;})
+      this.media.getRegisteredItems().subscribe((res:iRegisteredItems[]) =>{this.registeredItems = res; this.mapRegisteredItems(this.registeredItems)})
     }else{
       this.visitingFromHomePage = false;
-      this.media.getRegisteredItems().subscribe((res:iRegisteredItems[]) =>{this.registeredItems = res;})
+      this.media.getRegisteredItems().subscribe((res:iRegisteredItems[]) =>{this.registeredItems = res; this.mapRegisteredItems(this.registeredItems) })
     }
    }
 

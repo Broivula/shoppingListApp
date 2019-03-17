@@ -7,10 +7,53 @@
 
 <ion-content padding>
 
-  <form [formGroup]="form">
-    <ion-input *ngIf="!visitingFromHomePage" type="text" placeholder="esineen nimi" formControlName="item" #itemName></ion-input>
-    <ion-input *ngIf="visitingFromHomePage" type="text" [placeholder]="this.placeHolder" [value]="this.placeHolder" formControlName="item" #itemName></ion-input>
-    <ion-input type="text"  placeholder="hinta" formControlName="price"></ion-input>
-  <button ion-button (click)="registerNewItem()">Lähetä</button>
-  </form>
+  <div class="settings_content_class">
+    <ion-title style="text-align: center">
+      Rekisteröi esine
+    </ion-title>
+
+    <div style="justify-content: center; align-items: center;">
+      <form [formGroup]="form">
+        <ion-input class="inputClass" *ngIf="!visitingFromHomePage" type="text" placeholder="esineen nimi" formControlName="item" #itemName></ion-input>
+        <ion-input class="inputClass" *ngIf="visitingFromHomePage" type="text" [placeholder]="this.placeHolder" [value]="this.placeHolder" formControlName="item" #itemName></ion-input>
+        <ion-input class="inputClass" type="text"  placeholder="hinta" formControlName="price"></ion-input>
+    </form>
+      <button ion-button (click)="registerNewItem()" style="position: absolute; right: 10%;">Rekisteröi</button>
+    </div>
+  </div>
+
+
+  <div class="settings_content_class" style="margin-top: 20%">
+    <ion-title style="text-align: center">
+      Muuta rekisteröityä esinettä
+    </ion-title>
+    <div>
+      <!-- here the form to change old items, once i come up with a good system.. -->
+      <div>
+        <button ion-button (click)="openWheelSelector()" style="position: relative; margin-top: 5%; left:55%">Valitse esine</button>
+        <ion-title style="position: relative; left: 60%"><i>{{itemToBeChanged}}</i></ion-title>
+      </div>
+
+      <div>
+        <h5 style="position: relative; left: 10%; margin-bottom: 0;">uusi nimi</h5>
+        <ion-input class="inputClass" type="text" #itemChanged></ion-input>
+      </div>
+      <div style="margin-top: 5px;">
+        <h5 style="position: relative; left: 10%; margin-bottom: 0;">uusi hinta</h5>
+        <ion-input class="inputClass" type="text" #itemChanged></ion-input>
+      </div>
+      <button ion-button style="position: absolute; right: 10%">Päivitä</button>
+      <button ion-button style="position: absolute; left: 10%" color="danger">Poista esine</button>
+    </div>
+
+  </div>
+
 </ion-content>
+
+<!--
+<ion-input placeholder="esine" [(ngModel)]="searchString" (ionChange)="suggestionFunction()" type="text" #itemInput style="
+      background-color: floralwhite; border-radius: 5px; border: solid 1px darkgray; max-width: 70%; height: 60px;
+       margin-left: 10%; font-size: 25px; text-align: center;"
+        ></ion-input>
+
+-->
