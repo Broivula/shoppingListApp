@@ -13,16 +13,22 @@ export class MediaProvider {
 
 apiurl='http://192.168.8.101/node';
 
+proxy = 'node';
+
   constructor(public http: HttpClient) {
     console.log('Hello MediaProvider Provider');
   }
 
   getShoppingList() {
-    return this.http.get<iShoppingList[]>('http://192.168.8.101/node/get/list');
+    return this.http.get<iShoppingList[]>(this.apiurl+'/get/list');
   }
 
   getRegisteredItems() {
-    return this.http.get<iRegisteredItems[]>('http://192.168.8.101/node/get/registeredItems')
+    return this.http.get<iRegisteredItems[]>(this.apiurl+'/get/registeredItems')
+  }
+
+  getHistory(){
+    return this.http.get<iShoppingList[]>(this.apiurl+'/get/history')
   }
 
   getStatisticPictures(){
@@ -31,7 +37,7 @@ apiurl='http://192.168.8.101/node';
         'Content-type': 'application/json',
       }
     };
-    return this.http.get('http://192.168.8.101/node/get/history/images', httpOptions);
+    return this.http.get(this.apiurl+'/get/history/images', httpOptions);
   }
 
   postItem (data) {
@@ -40,7 +46,7 @@ apiurl='http://192.168.8.101/node';
         'Content-type': 'application/json',
       }
     };
-    return this.http.post('http://192.168.8.101/node/post/item',data,  httpOptions);
+    return this.http.post(this.apiurl+'/post/item',data,  httpOptions);
   }
 
   postBuyItem (data){
@@ -49,7 +55,7 @@ apiurl='http://192.168.8.101/node';
         'Content-type': 'application/json',
       }
     };
-    return this.http.post('http://192.168.8.101/node/post/buyItem', data, httpOptions);
+    return this.http.post(this.apiurl+'/post/buyItem', data, httpOptions);
   }
 
   registerItem (data) {
@@ -58,7 +64,7 @@ apiurl='http://192.168.8.101/node';
         'Content-type': 'application/json',
       }
     };
-    return this.http.post('http://192.168.8.101/node/post/register', data, httpOptions)
+    return this.http.post(this.apiurl+'/post/register', data, httpOptions)
   }
 
   deleteItem(data) {
@@ -69,9 +75,23 @@ apiurl='http://192.168.8.101/node';
       body:{
         item:data.item,
         id:data.id,
+        user:data.user,
+        purchase:data.purchase ? data.purchase : false
       }
     };
-    return this.http.delete('http://192.168.8.101/node/delete/item', httpOptions);
+    return this.http.delete(this.apiurl+'/delete/item', httpOptions);
+  }
+
+  updateItem(data) {
+    const httpOptions = {
+        item:data.item,
+        itemChanged:data.itemChanged,
+        price:data.price,
+        previousPrice: data.previousPrice,
+        user:data.user,
+    };
+
+    return this.http.put(this.apiurl+'/put/item', httpOptions);
   }
 }
 

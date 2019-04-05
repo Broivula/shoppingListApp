@@ -12,8 +12,9 @@
 
     <ion-menu [content]="myContent" side="start" [swipeEnabled]="false">
       <ion-list no-lines="true" no-border="true" style="padding-top: 30%">
-        <ion-item><button ion-button [full]="true" (click)="openStatistics({homePage:this})" [large]="true" ><ion-icon item-start name="trending-up"></ion-icon>statistics</button></ion-item>
+        <ion-item><button ion-button [full]="true" (click)="openStatistics({homePage:this})" [large]="true" ><ion-icon item-start name="stats"></ion-icon>statistics</button></ion-item>
         <ion-item><button ion-button [full]="true" (click)="openSettings({homePage:this})" [large]="true" ><ion-icon item-start name="settings"></ion-icon>settings</button></ion-item>
+        <ion-item><button ion-button [full]="true" (click)="openHistory({homePage:this})" [large]="true" ><ion-icon item-start name="book"></ion-icon>history</button></ion-item>
       </ion-list>
     </ion-menu>
 
@@ -26,7 +27,7 @@
     </div>
 
 
-    <ion-list *ngIf="usernameBool"  #listOfItems style="padding-top: 30%; max-height: 70%; overflow-y: scroll;" (touchstart)="getElem()" (touchend)="this.restoreElement()">
+    <ion-list *ngIf="usernameBool"  #listOfItems style="padding-top: 30%; max-height: 70%; min-height: 70%; overflow-y: scroll;" (touchstart)="getElem()" (touchend)="this.restoreElement()">
       <ion-item *ngFor="let entry of shoppingListData" no-lines="true" style="margin-left: 2%; ">
         <ion-slides  (ionSlideDrag)="detectSwipe($event, {item:entry.item, price:entry.price, id:entry.id})">
           <ion-slide>

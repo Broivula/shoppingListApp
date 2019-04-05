@@ -7,9 +7,11 @@ import { Socket } from "ng-socket-io";
 import { Observable } from "rxjs";
 import { MenuController } from "ionic-angular";
 import { SettingsPage } from "../settings/settings";
+import { StatisticsPage } from "../statistics/statistics";
+import { HistoryPage } from "../history/history";
 import { AlertController } from "ionic-angular";
 import { Platform } from 'ionic-angular';
-import {StatisticsPage} from "../statistics/statistics";
+
 
 @Component({
   selector: 'page-home',
@@ -88,12 +90,12 @@ export class HomePage {
    // console.log(data);
     this.isTouchingList =true;
     this.elementRef = evt['_elementRef'].nativeElement;
-    console.log(this.elementRef);
+  //  console.log(this.elementRef);
     let diff = Math.abs(evt['_touches'].diff);
     let dir = evt.swipeDirection;
     this.fadeElement(this.elementRef, diff);
     if( dir == 'prev' && diff > 220 && this.canBuy ) {
-      console.log('bought an item!1');
+    //  console.log('bought an item!1');
       this.canBuy = false;
       this.buyItem(data);
     }else if(dir == 'next' && diff > 220 && this.canDelete){
@@ -105,12 +107,12 @@ export class HomePage {
 
   addNewItem (name?) {
 
-    console.log(name);
+//    console.log(name);
 
 
     let itemName = name ? name.toString() : this.searchString.toString().toLowerCase();
 
-    console.log(itemName);
+ //   console.log(itemName);
     if(itemName.length > 2) {
       new Promise((resolve, reject) => {
         resolve (this.checkForRegisteringItem(itemName))
@@ -125,12 +127,14 @@ export class HomePage {
     data.user = this.userName;
     this.data.postBuyItem(data).subscribe( res => {
       //esine ostettu, poistetaan listalta
+      data.purchase = true;
       this.deleteItem(data);
     })
   }
 
   deleteItem (data) {
     console.log(data);
+    data.user = this.userName;
     this.data.deleteItem(data).subscribe( res => {
       for(let entry of this.shoppingListData){
         if(entry.item == data.item && entry.id == data.id){
@@ -185,12 +189,17 @@ export class HomePage {
   }
 
   openSettings(params?) {
-    console.log('opening settings with these parameters: ' + params);
+ //   console.log('opening settings with these parameters: ' + params);
+    params.user = this.userName;
     this.navCtrl.push(SettingsPage,params);
   }
 
   openStatistics(params?){
     this.navCtrl.push(StatisticsPage, params);
+  }
+
+  openHistory(params?){
+    this.navCtrl.push(HistoryPage, params);
   }
 
   totalCostOfItems(){
@@ -257,7 +266,7 @@ export class HomePage {
 
     this.getList();
     this.getRegisteredItems();
-    console.log(this.nameButtons)
+   // console.log(this.nameButtons)
 
    // this.socket.connect();
     //*for offline testing

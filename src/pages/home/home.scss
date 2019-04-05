@@ -36,6 +36,10 @@ page-home {
     min-width: 15%;
   }
 
+  .deletedButton{
+    animation: buttonDeleted 0.5s linear infinite;
+  }
+
   #priceName{
     min-width: 10%;
     margin-right: 6px;
@@ -81,6 +85,18 @@ page-home {
     margin: 0;
   }
 
+}
+
+@keyframes buttonDeleted {
+  0%{
+    height: 100%;
+  }
+  50%{
+    height: 50%;
+  }
+  100%{
+    height: 0;
+  }
 }
 
 @keyframes smoothEntranceButtons {

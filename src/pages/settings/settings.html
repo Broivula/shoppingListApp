@@ -1,7 +1,7 @@
 
 <ion-header>
   <ion-navbar color="primary">
-    <ion-title>settings</ion-title>
+    <ion-title>Settings</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -36,13 +36,13 @@
 
       <div>
         <h5 style="position: relative; left: 10%; margin-bottom: 0;">uusi nimi</h5>
-        <ion-input class="inputClass" type="text" #itemChanged></ion-input>
+        <ion-input class="inputClass" type="text" #newItemName></ion-input>
       </div>
       <div style="margin-top: 5px;">
         <h5 style="position: relative; left: 10%; margin-bottom: 0;">uusi hinta</h5>
-        <ion-input class="inputClass" type="text" #itemChanged></ion-input>
+        <ion-input class="inputClass" type="text" [placeholder]="selectedItemPrice" #newItemPrice></ion-input>
       </div>
-      <button ion-button style="position: absolute; right: 10%">Päivitä</button>
+      <button ion-button style="position: absolute; right: 10%" (click)="updateItemInfo()">Päivitä</button>
       <button ion-button style="position: absolute; left: 10%" color="danger">Poista esine</button>
     </div>
 

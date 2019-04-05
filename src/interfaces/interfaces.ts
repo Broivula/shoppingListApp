@@ -4,6 +4,7 @@ export interface iShoppingList {
   'price'?:number,
   'date': string,
   'id'?:number,
+  'previousName'?:string
 }
 
 export interface iRegisteredItems {
