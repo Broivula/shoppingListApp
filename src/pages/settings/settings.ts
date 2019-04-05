@@ -46,6 +46,7 @@ export class SettingsPage {
   this.form = this.formbuilder.group({
     item:[''],
     price:[''],
+    user:[''],
   })
   }
 
@@ -89,6 +90,7 @@ export class SettingsPage {
 
   registerStepTwo(){
      return new Promise((resolve, reject) => {
+       this.form.value.user = this.userName;
        this.media.registerItem(this.form.value).subscribe(res => {
          this.alertFunction({title:'Success!', message:'Esine rekisteröity', button_text:'Palaa etusivulle', redir:true});
          resolve(res);

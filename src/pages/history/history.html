@@ -17,8 +17,9 @@
     <p  style="white-space: normal; overflow-wrap: normal;" *ngIf="entry.action == 'päivitys' && entry.previousName && entry.previousPrice"><i>{{entry.date| date:"dd.MM - HH:mm"}}</i>: {{entry.user}} päivitti tuotteen {{entry.previousName}} nimeksi -> {{entry.item}}, sekä hinnan {{entry.previousPrice}} -> {{entry.price}}€</p>
     <p  style="white-space: normal; overflow-wrap: normal;" *ngIf="entry.action == 'päivitys' && entry.previousPrice && !entry.previousName"><i>{{entry.date| date:"dd.MM - HH:mm"}}</i>: {{entry.user}} päivitti tuotteen {{entry.item}}  hinnan {{entry.previousPrice}} -> {{entry.price}}€</p>
     <p  style="white-space: normal; overflow-wrap: normal;" *ngIf="entry.action == 'päivitys' && !entry.previousPrice && entry.previousName"><i>{{entry.date| date:"dd.MM - HH:mm"}}</i>: {{entry.user}} päivitti tuotteen {{entry.previousName}}  nimen -> {{entry.item}}</p>
-    <p   style="white-space: normal; overflow-wrap: normal;" *ngIf="entry.action == 'lisäys'"><i>{{entry.date| date:"dd.MM - HH:mm"}}</i>: {{entry.user}} lisäsi tuotteen {{entry.item}} listaan</p>
-    <p   style="white-space: normal; overflow-wrap: normal;" *ngIf="entry.action == 'poisto'"><i>{{entry.date| date:"dd.MM - HH:mm"}}</i>: {{entry.user}} poisti tuotteen {{entry.item}} listasta</p>
+    <p   style="white-space: normal; overflow-wrap: normal;" *ngIf="entry.action == 'lisäys'"><i>{{entry.date| date:"dd.MM - HH:mm"}}</i>: {{entry.user}} lisäsi tuotteen {{entry.item}} kauppalistaan</p>
+    <p   style="white-space: normal; overflow-wrap: normal;" *ngIf="entry.action == 'poisto'"><i>{{entry.date| date:"dd.MM - HH:mm"}}</i>: {{entry.user}} poisti tuotteen {{entry.item}} kauppalistasta</p>
+    <p   style="white-space: normal; overflow-wrap: normal;" *ngIf="entry.action == 'rekisteröinti'"><i>{{entry.date| date:"dd.MM - HH:mm"}}</i>: {{entry.user}} rekisteröi tuotteen {{entry.item}} hinnalla {{entry.price}}</p>
   </ion-item>
 </ion-list>
 
