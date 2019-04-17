@@ -20,15 +20,15 @@ proxy = 'node';
   }
 
   getShoppingList() {
-    return this.http.get<iShoppingList[]>(this.apiurl+'/get/list');
+    return this.http.get<iShoppingList[]>(this.apirulext+'/get/list');
   }
 
   getRegisteredItems() {
-    return this.http.get<iRegisteredItems[]>(this.apiurl+'/get/registeredItems')
+    return this.http.get<iRegisteredItems[]>(this.apirulext+'/get/registeredItems')
   }
 
   getHistory(){
-    return this.http.get<iShoppingList[]>(this.apiurl+'/get/history')
+    return this.http.get<iShoppingList[]>(this.apirulext+'/get/history')
   }
 
   getStatisticPictures(){
@@ -37,7 +37,7 @@ proxy = 'node';
         'Content-type': 'application/json',
       }
     };
-    return this.http.get(this.apiurl+'/get/history/images', httpOptions);
+    return this.http.get(this.apirulext+'/get/history/images', httpOptions);
   }
 
   postItem (data) {
@@ -46,7 +46,7 @@ proxy = 'node';
         'Content-type': 'application/json',
       }
     };
-    return this.http.post(this.apiurl+'/post/item',data,  httpOptions);
+    return this.http.post(this.apirulext+'/post/item',data,  httpOptions);
   }
 
   postBuyItem (data){
@@ -55,7 +55,7 @@ proxy = 'node';
         'Content-type': 'application/json',
       }
     };
-    return this.http.post(this.apiurl+'/post/buyItem', data, httpOptions);
+    return this.http.post(this.apirulext+'/post/buyItem', data, httpOptions);
   }
 
   registerItem (data) {
@@ -64,7 +64,7 @@ proxy = 'node';
         'Content-type': 'application/json',
       }
     };
-    return this.http.post(this.apiurl+'/post/register', data, httpOptions)
+    return this.http.post(this.apirulext+'/post/register', data, httpOptions)
   }
 
   deleteItem(data) {
@@ -79,7 +79,7 @@ proxy = 'node';
         purchase:data.purchase ? data.purchase : false
       }
     };
-    return this.http.delete(this.apiurl+'/delete/item', httpOptions);
+    return this.http.delete(this.apirulext+'/delete/item', httpOptions);
   }
 
   updateItem(data) {
@@ -91,7 +91,7 @@ proxy = 'node';
         user:data.user,
     };
 
-    return this.http.put(this.apiurl+'/put/item', httpOptions);
+    return this.http.put(this.apirulext+'/put/item', httpOptions);
   }
 }
 

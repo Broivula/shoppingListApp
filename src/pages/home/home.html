@@ -27,7 +27,7 @@
     </div>
 
 
-    <ion-list *ngIf="usernameBool"  #listOfItems style="padding-top: 30%; max-height: 70%; min-height: 70%; overflow-y: scroll;" (touchstart)="getElem()" (touchend)="this.restoreElement()">
+    <ion-list *ngIf="usernameBool"  #listOfItems style="padding-top: 30%; max-height: 60%; min-height: 60%; overflow-y: scroll;" (touchstart)="getElem()" (touchend)="this.restoreElement()">
       <ion-item *ngFor="let entry of shoppingListData" no-lines="true" style="margin-left: 2%; ">
         <ion-slides  (ionSlideDrag)="detectSwipe($event, {item:entry.item, price:entry.price, id:entry.id})">
           <ion-slide>

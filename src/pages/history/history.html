@@ -8,19 +8,79 @@
   <ion-navbar color="primary_darker">
     <ion-title>History</ion-title>
   </ion-navbar>
+  <ion-navbar *ngIf="loadingComplete" style="display: flex;flex-wrap: wrap"  color="history_navbar">
+
+   <button ion-button class="historyTopButton" value="kaikki" (click)="onTap($event)">
+      kaikki
+    </button>
+    <button ion-button class="historyTopButton" value="osto_poisto" (click)="onTap($event)">
+      osto/
+      poisto
+    </button>
+    <button ion-button class="historyTopButton" value="lisays" (click)="onTap($event)">
+      lisäys
+    </button>
+    <button ion-button class="historyTopButton" value="paivitys" (click)="onTap($event)">
+      päivitys
+    </button>
+    <button ion-button class="historyTopButton" value="rekisterointi" (click)="onTap($event)">
+      rekiste-
+      röinti
+    </button>
+  </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-<ion-list *ngIf="history.length > 0">
-  <ion-item *ngFor="let entry of history">
-    <p  style="white-space: normal; overflow-wrap: normal;" *ngIf="entry.action == 'osto'"><i>{{entry.date| date:"dd.MM - HH:mm"}}</i>: {{entry.user}} osti {{entry.item}} hintaan {{entry.price}}</p>
-    <p  style="white-space: normal; overflow-wrap: normal;" *ngIf="entry.action == 'päivitys' && entry.previousName && entry.previousPrice"><i>{{entry.date| date:"dd.MM - HH:mm"}}</i>: {{entry.user}} päivitti tuotteen {{entry.previousName}} nimeksi -> {{entry.item}}, sekä hinnan {{entry.previousPrice}} -> {{entry.price}}€</p>
-    <p  style="white-space: normal; overflow-wrap: normal;" *ngIf="entry.action == 'päivitys' && entry.previousPrice && !entry.previousName"><i>{{entry.date| date:"dd.MM - HH:mm"}}</i>: {{entry.user}} päivitti tuotteen {{entry.item}}  hinnan {{entry.previousPrice}} -> {{entry.price}}€</p>
-    <p  style="white-space: normal; overflow-wrap: normal;" *ngIf="entry.action == 'päivitys' && !entry.previousPrice && entry.previousName"><i>{{entry.date| date:"dd.MM - HH:mm"}}</i>: {{entry.user}} päivitti tuotteen {{entry.previousName}}  nimen -> {{entry.item}}</p>
-    <p   style="white-space: normal; overflow-wrap: normal;" *ngIf="entry.action == 'lisäys'"><i>{{entry.date| date:"dd.MM - HH:mm"}}</i>: {{entry.user}} lisäsi tuotteen {{entry.item}} kauppalistaan</p>
-    <p   style="white-space: normal; overflow-wrap: normal;" *ngIf="entry.action == 'poisto'"><i>{{entry.date| date:"dd.MM - HH:mm"}}</i>: {{entry.user}} poisti tuotteen {{entry.item}} kauppalistasta</p>
-    <p   style="white-space: normal; overflow-wrap: normal;" *ngIf="entry.action == 'rekisteröinti'"><i>{{entry.date| date:"dd.MM - HH:mm"}}</i>: {{entry.user}} rekisteröi tuotteen {{entry.item}} hinnalla {{entry.price}}</p>
-  </ion-item>
-</ion-list>
+<ion-content padding style="margin-top: 15%">
+
+  <div *ngIf="loadingComplete">
+    <ion-list *ngIf="history.length">
+
+      <div *ngIf="allBooleans.kaikki">
+        <ion-item  *ngFor="let entry of history">
+          <p  style="white-space: normal; overflow-wrap: normal;" *ngIf="entry.action == 'osto'"><i>{{entry.date| date:"dd.MM - HH:mm"}}</i>: {{entry.user}} osti {{entry.item}} hintaan {{entry.price}}</p>
+          <p  style="white-space: normal; overflow-wrap: normal;" *ngIf="entry.action == 'päivitys' && entry.previousName && entry.previousPrice"><i>{{entry.date| date:"dd.MM - HH:mm"}}</i>: {{entry.user}} päivitti tuotteen {{entry.previousName}} nimeksi -> {{entry.item}}, sekä hinnan {{entry.previousPrice}} -> {{entry.price}}€</p>
+          <p  style="white-space: normal; overflow-wrap: normal;" *ngIf="entry.action == 'päivitys' && entry.previousPrice && !entry.previousName"><i>{{entry.date| date:"dd.MM - HH:mm"}}</i>: {{entry.user}} päivitti tuotteen {{entry.item}}  hinnan {{entry.previousPrice}} -> {{entry.price}}€</p>
+          <p  style="white-space: normal; overflow-wrap: normal;" *ngIf="entry.action == 'päivitys' && !entry.previousPrice && entry.previousName"><i>{{entry.date| date:"dd.MM - HH:mm"}}</i>: {{entry.user}} päivitti tuotteen {{entry.previousName}}  nimen -> {{entry.item}}</p>
+          <p   style="white-space: normal; overflow-wrap: normal;" *ngIf="entry.action == 'lisäys'"><i>{{entry.date| date:"dd.MM - HH:mm"}}</i>: {{entry.user}} lisäsi tuotteen {{entry.item}} kauppalistaan</p>
+          <p   style="white-space: normal; overflow-wrap: normal;" *ngIf="entry.action == 'poisto'"><i>{{entry.date| date:"dd.MM - HH:mm"}}</i>: {{entry.user}} poisti tuotteen {{entry.item}} kauppalistasta</p>
+          <p   style="white-space: normal; overflow-wrap: normal;" *ngIf="entry.action == 'rekisteröinti'"><i>{{entry.date| date:"dd.MM - HH:mm"}}</i>: {{entry.user}} rekisteröi tuotteen {{entry.item}} hinnalla {{entry.price}}</p>
+        </ion-item>
+      </div>
+
+      <div *ngIf="allBooleans.osto_poisto">
+        <ion-item *ngFor="let entry of ostoArr">
+          <p  style="white-space: normal; overflow-wrap: normal;" *ngIf="entry.action == 'osto'"><i>{{entry.date| date:"dd.MM - HH:mm"}}</i>: {{entry.user}} osti {{entry.item}} hintaan {{entry.price}}</p>
+          <p   style="white-space: normal; overflow-wrap: normal;" *ngIf="entry.action == 'poisto'"><i>{{entry.date| date:"dd.MM - HH:mm"}}</i>: {{entry.user}} poisti tuotteen {{entry.item}} kauppalistasta</p>
+        </ion-item>
+      </div>
+
+
+      <div *ngIf="allBooleans.lisays">
+        <ion-item  *ngFor="let entry of lisaysArr">
+          <p   style="white-space: normal; overflow-wrap: normal;" *ngIf="entry.action == 'lisäys'"><i>{{entry.date| date:"dd.MM - HH:mm"}}</i>: {{entry.user}} lisäsi tuotteen {{entry.item}} kauppalistaan</p>
+        </ion-item>
+      </div>
+
+      <div *ngIf="allBooleans.rekisterointi">
+        <ion-item  *ngFor="let entry of rekisterArr">
+          <p   style="white-space: normal; overflow-wrap: normal;" *ngIf="entry.action == 'rekisteröinti'"><i>{{entry.date| date:"dd.MM - HH:mm"}}</i>: {{entry.user}} rekisteröi tuotteen {{entry.item}} hinnalla {{entry.price}}</p>
+        </ion-item>
+      </div>
+
+      <div *ngIf="allBooleans.paivitys">
+        <ion-item  *ngFor="let entry of paivitysArr">
+          <p  style="white-space: normal; overflow-wrap: normal;" *ngIf="entry.previousName && entry.previousPrice"><i>{{entry.date| date:"dd.MM - HH:mm"}}</i>: {{entry.user}} päivitti tuotteen {{entry.previousName}} nimeksi -> {{entry.item}}, sekä hinnan {{entry.previousPrice}} -> {{entry.price}}€</p>
+          <p  style="white-space: normal; overflow-wrap: normal;" *ngIf="entry.previousPrice && !entry.previousName"><i>{{entry.date| date:"dd.MM - HH:mm"}}</i>: {{entry.user}} päivitti tuotteen {{entry.item}}  hinnan {{entry.previousPrice}} -> {{entry.price}}€</p>
+          <p  style="white-space: normal; overflow-wrap: normal;" *ngIf="!entry.previousPrice && entry.previousName"><i>{{entry.date| date:"dd.MM - HH:mm"}}</i>: {{entry.user}} päivitti tuotteen {{entry.previousName}}  nimen -> {{entry.item}}</p>
+        </ion-item>
+      </div>
+    </ion-list>
+  </div>
+
+  <div *ngIf="!loadingComplete">
+    <ion-spinner name="dots" style="display: block; margin: auto;"></ion-spinner>
+    <h4 style="text-align: center">Lataa historiaa..</h4>
+  </div>
+
 
 </ion-content>
